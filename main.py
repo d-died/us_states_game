@@ -16,14 +16,16 @@ y = states_data.y.to_list()
 
 score = 0
 guessed_states = []
-states_to_learn = []
+
 while score < 50:
     answer_state = screen.textinput(title=f"{score}/50 States Correct", prompt="What's a state name?").title()
 
     if answer_state == "Exit":
-        for state in list_of_states:
-            if state not in guessed_states:
-                states_to_learn.append(state)
+        states_to_learn = [state for state in list_of_states if state not in guessed_states]
+        # Refactored from below to use list comprehension:
+        # for state in list_of_states:
+        #     if state not in guessed_states:
+        #         states_to_learn.append(state)
         s = pd.Series(states_to_learn)
         s.to_csv("states_to_learn.csv")
         break
